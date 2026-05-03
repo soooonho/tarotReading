@@ -35,6 +35,8 @@ export default function App() {
     }
 
     //성격 카드와 일치하는 target_sum 검색
+    if (personalityNum < 10)
+      return tarotData.find((item) => item.group_id === soulNumber);
     return tarotData.find((item) => item.target_sum === personalityNum);
   };
   const clickHandler = () => {
