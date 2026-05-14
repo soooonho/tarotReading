@@ -1,5 +1,7 @@
 import { useState } from "react";
 import tarotDataRaw from "./tarotData.json";
+import "./App.css";
+
 interface TarotGroup {
   group_id: number; //소울 카드
   target_sum: number; //성격 카드
@@ -50,38 +52,60 @@ export default function App() {
     setTarot(result || null);
   };
   return (
-    <>
-      <input
-        placeholder="년"
-        value={year}
-        onChange={(e) => setYear(e.target.value)}
-      />
-      <input
-        placeholder="월"
-        value={month}
-        onChange={(e) => setMonth(e.target.value)}
-      />
-      <input
-        placeholder="일"
-        value={day}
-        onChange={(e) => setDay(e.target.value)}
-      />
-      <button onClick={clickHandler}>확인</button>
-      <h1>{tarot ? tarot.names[0] + " " + tarot.names[1] : ""}</h1>
-      <h2>{tarot ? tarot.keywords.map((value) => value).join(" ") : ""}</h2>
-      <p>{tarot ? tarot.description : ""}</p>
-      <img
-        src={tarot ? `/major${tarot.cards[0]}.svg` : ""}
-        alt="소울 카드"
-        width="200"
-        height="300"
-      />
-      <img
-        src={tarot ? `/major${tarot.cards[1]}.svg` : ""}
-        alt="성격 카드"
-        width="200"
-        height="300"
-      />
-    </>
+    <div className="app">
+      <div className="moon-icon">🌙</div>
+      <h1 className="app-title">운명의 타로 카드</h1>
+
+      <div className="input-group">
+        <div className="input-wrapper">
+          <input
+            placeholder="년 (예: 1995)"
+            value={year}
+            onChange={(e) => setYear(e.target.value)}
+          />
+        </div>
+        <div className="input-wrapper">
+          <input
+            placeholder="월 (예: 08)"
+            value={month}
+            onChange={(e) => setMonth(e.target.value)}
+          />
+        </div>
+        <div className="input-wrapper">
+          <input
+            placeholder="일 (예: 23)"
+            value={day}
+            onChange={(e) => setDay(e.target.value)}
+          />
+        </div>
+      </div>
+
+      <button className="confirm-btn" onClick={clickHandler}>
+        확인해보기
+      </button>
+
+      {tarot && (
+        <div className="result">
+          <div className="divider">
+            <span className="divider-star">✦</span>
+          </div>
+          <p className="card-names">
+            {tarot.names[0]} &amp; {tarot.names[1]}
+          </p>
+          <p className="card-keywords">{tarot.keywords.join(" · ")}</p>
+          <p className="card-description">{tarot.description}</p>
+          <div className="cards-row">
+            <div className="card-wrap">
+              <span className="card-label">소울 카드</span>
+              <img src={`/major${tarot.cards[0]}.svg`} alt="소울 카드" />
+            </div>
+            <div className="card-wrap">
+              <span className="card-label">성격 카드</span>
+              <img src={`/major${tarot.cards[1]}.svg`} alt="성격 카드" />
+            </div>
+          </div>
+        </div>
+      )}
+    </div>
   );
 }
