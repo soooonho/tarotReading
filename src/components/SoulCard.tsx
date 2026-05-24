@@ -1,5 +1,5 @@
 import { useState } from "react";
-import tarotDataRaw from "../tarotData.json";
+import tarotDataRaw from "../assets/data/tarotData.json";
 import "../App.css";
 
 interface TarotGroup {
@@ -10,12 +10,18 @@ interface TarotGroup {
   keywords: string[]; // 대표 키워드 배열
   description: string; // 해당 조합의 해석
 }
-const tarotData = tarotDataRaw.tarot_birth_cards;
+const tarotData = tarotDataRaw;
 export default function SoulCard() {
   const [year, setYear] = useState("");
   const [month, setMonth] = useState("");
   const [day, setDay] = useState("");
-  const [tarot, setTarot] = useState<TarotGroup | null>(null);
+  const [savedData] = useState(() => {
+    const history = JSON.parse(localStorage.getItem("soul") || "null");
+    return history;
+  });
+  const [tarot, setTarot] = useState<TarotGroup | null>(
+    savedData ? savedData : null,
+  );
   const calcTarot = (y: string, m: string, d: string) => {
     const dateStr = y + m + d;
     const getSum = (numStr: string): number => {
@@ -49,12 +55,12 @@ export default function SoulCard() {
     if (isNaN(y) || isNaN(m) || isNaN(d)) return;
     //calcTarot(year, month, day);
     const result = calcTarot(year, month, day);
-    setTarot(result || null);
+    setTarot(result!);
+    localStorage.setItem("soul", JSON.stringify(result));
   };
-  
+
   return (
     <>
-
       {/* 기존 콘텐츠 */}
       <div className="form-section">
         <div className="moon-icon">🌙</div>

@@ -6,7 +6,12 @@ import History from "./History";
 import Normal from "./Normal";
 
 export default function Tarot() {
-  const [currentPage, setCurrentPage] = useState("main");
+  const [currentPage, setCurrentPage] = useState(() => {
+    const params = new URLSearchParams(window.location.search);
+    const page = params.get("page");
+    if (page) return page;
+    else return "main";
+  });
   const pageHandler = (e: React.MouseEvent<HTMLButtonElement>) => {
     setCurrentPage(e.currentTarget.value);
   };

@@ -1,44 +1,33 @@
-import { useState } from "react";
-import TodayCard from "./TodayCard";
-import dailyTarotDataRaw from "../dailyTarotData.json";
-const dailyTarot = dailyTarotDataRaw.daily_tarot_cards;
-const shuffle = (arr: number[]) => {
-  const shuffled = [...arr];
-  for (let i = shuffled.length - 1; i > 0; i--) {
-    const j = Math.floor(Math.random() * (i + 1));
-    const temp = shuffled[i];
-    shuffled[i] = shuffled[j];
-    shuffled[j] = temp;
-  }
-  return shuffled;
-};
-const getCardDirection = () => {
-  return Math.random() > 0.5;
-};
-const initialDeck = [...Array(22).keys()];
-const deck = shuffle(initialDeck);
-let upright = true;
+import dailyTarotDataRaw from "../assets/data/dailyTarotData.json";
+import FlippedCard from "./FlippedCard";
+import { getShuffledDeck, type tarotRecord } from "../tarotControl";
+import { useTarotState } from "../hooks/useTarotState";
+import { handleTarotClick } from "../hooks/handleTarotClick";
+import { handleClickHistory } from "../hooks/handleClickHistory";
+import { handleShareUrl } from "../hooks/handleShareUrl";
+import { handleRestart } from "../hooks/handleRestart";
+const deck = getShuffledDeck();
+const page = "today";
+const category = "today";
+const maxSelectedCard = 1;
 export default function Today() {
-  const [selectedCard, setSelectedCard] = useState(-1);
-  const tarotOnClick = (cardNum: number) => {
-    upright = getCardDirection();
-    setSelectedCard(cardNum);
-  };
+  const { history, selectedCards, setSelectedCards, flipCards, setFlipCards } =
+    useTarotState(category);
   return (
     <>
       <div>
-        {selectedCard !== -1 && (
+        {selectedCards[0] && (
           <>
-            <h1>{dailyTarot[selectedCard].name}</h1>
+            <h1>{dailyTarotDataRaw[selectedCards[0].cardNum].name}</h1>
             <p>
-              {dailyTarot[selectedCard].keywords
+              {dailyTarotDataRaw[selectedCards[0].cardNum].keywords
                 .map((value) => value)
                 .join(", ")}
             </p>
             <img
-              src={`${selectedCard}.png`}
+              src={`${selectedCards[0].cardNum}.png`}
               style={
-                upright
+                selectedCards[0].upright
                   ? { width: "200px" }
                   : {
                       width: "200px",
@@ -47,31 +36,57 @@ export default function Today() {
               }
             />
             <p>
-              {upright
-                ? dailyTarot[selectedCard].upright
-                : dailyTarot[selectedCard].reversed}
+              {selectedCards[0].upright
+                ? dailyTarotDataRaw[selectedCards[0].cardNum].upright
+                : dailyTarotDataRaw[selectedCards[0].cardNum].reversed}
             </p>
+            <button
+              onClick={() => handleRestart(setSelectedCards, setFlipCards)}
+            >
+              다시
+            </button>
+            <button
+              onClick={() => handleShareUrl(page, category, selectedCards)}
+            >
+              공유
+            </button>
           </>
         )}
       </div>
-      {/* <TodayCard
-        isClicked={isClicked}
-        cardNum={3}
-        tarotOnClick={tarotOnClick}
-      />
-      <TodayCard
-        isClicked={isClicked}
-        cardNum={4}
-        tarotOnClick={tarotOnClick}
-      /> */}
-      {deck.map((value) => (
-        <TodayCard
-          key={value}
-          selectedCard={selectedCard}
-          cardNum={value}
-          tarotOnClick={tarotOnClick}
-        />
-      ))}
+      {!flipCards &&
+        deck.map((value) => (
+          <FlippedCard
+            key={value}
+            cardNum={
+              flipCards && selectedCards.includes(value) ? value.cardNum : 0
+            }
+            upright={
+              flipCards && selectedCards.includes(value) ? value.upright : true
+            }
+            onClick={() =>
+              handleTarotClick(
+                category,
+                maxSelectedCard,
+                value,
+                flipCards,
+                setFlipCards,
+                selectedCards,
+                setSelectedCards,
+              )
+            }
+          />
+        ))}
+      {history &&
+        history.map((item: tarotRecord) => (
+          <button
+            key={item.date}
+            onClick={() =>
+              handleClickHistory(item, setSelectedCards, setFlipCards)
+            }
+          >
+            {item.date}
+          </button>
+        ))}
     </>
   );
 }
