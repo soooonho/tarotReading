@@ -1,0 +1,87 @@
+/* ── CSS Variables ── */
+:root {
+  --silver: #8fa4b8;
+  --silver-dim: #c8d4e0;
+  --silver-glow: rgba(117, 216, 255, 0.35);
+  --bg: #080808;
+  --surface: rgba(255, 255, 255, 0.04);
+  --border: rgba(105, 203, 255, 0.3);
+  --text: #b0c0d0;
+  --text-muted: #4a5a54;
+}
+
+.app {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  width: 100%;
+}
+
+.basic-btn {
+  width: 100%;
+  max-width: 200px;
+  padding: 8px 0;
+  background: transparent;
+  border: 1px solid var(--silver);
+  border-radius: 4px;
+  color: var(--silver);
+  font-family: "Noto Serif KR", serif;
+  font-size: 1rem;
+  letter-spacing: 0.15em;
+  cursor: pointer;
+  position: relative;
+  overflow: hidden;
+  transition:
+    color 0.3s,
+    box-shadow 0.3s;
+  margin-bottom: 15px;
+}
+
+.basic-btn::before {
+  content: "";
+  position: absolute;
+  inset: 0;
+  background: var(--silver);
+  transform: scaleX(0);
+  transform-origin: center;
+  transition: transform 0.3s ease;
+  z-index: -1;
+}
+
+.basic-btn:hover {
+  color: var(--bg);
+  box-shadow: 0 0 20px var(--silver-glow);
+  -webkit-transition: all 0.2s ease-out;
+  transition: all 0.2s ease-out;
+  -webkit-transform: scale(1.1);
+  transform: scale(1.1);
+}
+
+.basic-btn:hover::before {
+  transform: scaleX(1.2);
+}
+
+.basic-btn:active {
+  opacity: 0.8;
+  transform: scale(0.98);
+}
+
+.tarot-grid-container {
+  display: grid;
+  grid-template-columns: repeat(11, 1fr) !important;
+  gap: 10px;
+  padding: 20px;
+  width: 100%;
+  box-sizing: border-box;
+}
+
+.tarot-grid-container > * {
+  width: 100% !important;
+  max-width: 100% !important;
+  height: auto !important;
+  display: block;
+}
+
+.tarot-grid-container > *:hover {
+  transform: translateY(-5px);
+}

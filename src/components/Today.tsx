@@ -6,6 +6,8 @@ import { handleTarotClick } from "../hooks/handleTarotClick";
 import { handleClickHistory } from "../hooks/handleClickHistory";
 import { handleShareUrl } from "../hooks/handleShareUrl";
 import { handleRestart } from "../hooks/handleRestart";
+import "../Tarot.css";
+
 const deck = getShuffledDeck();
 const page = "daily";
 const category = "daily";
@@ -41,11 +43,13 @@ export default function Today() {
                 : dailyTarotDataRaw[selectedCards[0].cardNum].reversed}
             </p>
             <button
+              className="basic-btn"
               onClick={() => handleRestart(setSelectedCards, setFlipCards)}
             >
               다시
             </button>
             <button
+              className="basic-btn"
               onClick={() => handleShareUrl(page, category, selectedCards)}
             >
               공유
@@ -53,29 +57,34 @@ export default function Today() {
           </>
         )}
       </div>
-      {!flipCards &&
-        deck.map((value) => (
-          <FlippedCard
-            key={value}
-            cardNum={
-              flipCards && selectedCards.includes(value) ? value.cardNum : 0
-            }
-            upright={
-              flipCards && selectedCards.includes(value) ? value.upright : true
-            }
-            onClick={() =>
-              handleTarotClick(
-                category,
-                maxSelectedCard,
-                value,
-                flipCards,
-                setFlipCards,
-                selectedCards,
-                setSelectedCards,
-              )
-            }
-          />
-        ))}
+      {!flipCards && (
+        <div className="tarot-grid-container">
+          {deck.map((value) => (
+            <FlippedCard
+              key={value.cardNum} // value 전체보다는 고유한 cardNum이나 별도 id가 좋습니다.
+              cardNum={
+                flipCards && selectedCards.includes(value) ? value.cardNum : 0
+              }
+              upright={
+                flipCards && selectedCards.includes(value)
+                  ? value.upright
+                  : true
+              }
+              onClick={() =>
+                handleTarotClick(
+                  category,
+                  maxSelectedCard,
+                  value,
+                  flipCards,
+                  setFlipCards,
+                  selectedCards,
+                  setSelectedCards,
+                )
+              }
+            />
+          ))}
+        </div>
+      )}
       {history &&
         history.map((item: tarotRecord) => (
           <button

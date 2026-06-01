@@ -1,6 +1,9 @@
 import { useState } from "react";
 import Money from "./Money";
 import Love from "./Love";
+
+import "../Tarot.css";
+
 export default function Normal() {
   const [currentPage, setCurrentPage] = useState(() => {
     const params = new URLSearchParams(window.location.search);
@@ -14,10 +17,10 @@ export default function Normal() {
   return (
     <>
       <div className="app">
-        <button value="love" onClick={handlepage}>
+        <button className="basic-btn" value="love" onClick={handlepage}>
           연애운
         </button>
-        <button value="money" onClick={handlepage}>
+        <button className="basic-btn" value="money" onClick={handlepage}>
           금전운
         </button>
         {currentPage == "main" && <h1>Normal Component</h1>}

@@ -4,6 +4,7 @@ import SoulCard from "./SoulCard";
 import History from "./History";
 import Normal from "./Normal";
 import Daily from "./Daily";
+import "../Tarot.css";
 
 export default function Tarot() {
   const [currentPage, setCurrentPage] = useState(() => {
@@ -19,19 +20,19 @@ export default function Tarot() {
     <>
       <div className="app">
         <Bcakground />
-        <button value="main" onClick={pageHandler}>
+        <button className="basic-btn" value="main" onClick={pageHandler}>
           메인
         </button>
-        <button value="soul" onClick={pageHandler}>
+        <button className="basic-btn" value="soul" onClick={pageHandler}>
           소울카드
         </button>
-        <button value="today" onClick={pageHandler}>
+        <button className="basic-btn" value="today" onClick={pageHandler}>
           오늘의운세
         </button>
-        <button value="normal" onClick={pageHandler}>
+        <button className="basic-btn" value="normal" onClick={pageHandler}>
           일반운세
         </button>
-        <button value="history" onClick={pageHandler}>
+        <button className="basic-btn" value="history" onClick={pageHandler}>
           과거이력조회
         </button>
         {currentPage == "main" && <h1>App Component</h1>}
