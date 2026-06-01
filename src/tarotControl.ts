@@ -43,11 +43,11 @@ export const getToday = () => {
 export const saveTarotCards = (cards: tarotCard[], category: string) => {
   const today = getToday();
   const history = JSON.parse(localStorage.getItem(category) || "[]");
-  const filteredHotory = history.filter(
+  const filteredHistory = history.filter(
     (item: tarotRecord) => item.date !== today,
   );
   localStorage.setItem(
     category,
-    JSON.stringify([{ cards: cards, date: today }, ...filteredHotory]),
+    JSON.stringify([{ cards: cards, date: today }, ...filteredHistory]),
   );
 };

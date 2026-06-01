@@ -1,32 +1,32 @@
+import dailyTarotDataRaw from "../assets/data/dailyTarotData.json";
+import FlippedCard from "./FlippedCard";
 import { getShuffledDeck, type tarotRecord } from "../tarotControl";
 import { useTarotState } from "../hooks/useTarotState";
-import FlippedCard from "./FlippedCard";
-import loveTarotDataRaw from "../assets/data/loveTarotData.json";
 import { handleTarotClick } from "../hooks/handleTarotClick";
-import { handleClickHistory } from "../hooks/handleClickHistory";
-import ShowCards from "./ShowCards";
+import ShowDailyCard from "./ShowDailyCard";
 const deck = getShuffledDeck();
-const page = "normal";
-const category = "love";
-const maxSelectedCard = 3;
-export default function Love() {
-  const { history, selectedCards, setSelectedCards, flipCards, setFlipCards } =
+const page = "daily";
+const category = "daily";
+const maxSelectedCard = 1;
+export default function Daily() {
+  const { selectedCards, setSelectedCards, flipCards, setFlipCards } =
     useTarotState(category);
-  console.log(deck);
   return (
     <>
-      {flipCards && (
-        <ShowCards
-          page={page}
-          category={category}
-          rawData={loveTarotDataRaw}
-          selectedCards={selectedCards}
-          setSelectedCards={setSelectedCards}
-          setFlipCards={setFlipCards}
-          again={true}
-          share={true}
-        />
-      )}
+      <div>
+        {selectedCards[0] && (
+          <ShowDailyCard
+            page={page}
+            category={category}
+            rawData={dailyTarotDataRaw}
+            selectedCards={selectedCards}
+            setSelectedCards={setSelectedCards}
+            setFlipCards={setFlipCards}
+            again={true}
+            share={true}
+          ></ShowDailyCard>
+        )}
+      </div>
       {!flipCards &&
         deck.map((value) => (
           <FlippedCard
@@ -50,7 +50,7 @@ export default function Love() {
             }
           />
         ))}
-      {history &&
+      {/* {history &&
         history.map((item: tarotRecord) => (
           <button
             key={item.date}
@@ -60,7 +60,7 @@ export default function Love() {
           >
             {item.date}
           </button>
-        ))}
+        ))} */}
     </>
   );
 }

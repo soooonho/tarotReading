@@ -1,9 +1,9 @@
 import { useState } from "react";
 import Bcakground from "./Bcakground";
 import SoulCard from "./SoulCard";
-import Today from "./Today";
 import History from "./History";
 import Normal from "./Normal";
+import Daily from "./Daily";
 
 export default function Tarot() {
   const [currentPage, setCurrentPage] = useState(() => {
@@ -36,7 +36,7 @@ export default function Tarot() {
         </button>
         {currentPage == "main" && <h1>App Component</h1>}
         {currentPage == "soul" && <SoulCard />}
-        {currentPage == "today" && <Today />}
+        {currentPage == "today" && <Daily />}
         {currentPage == "normal" && <Normal />}
         {currentPage == "history" && <History />}
       </div>

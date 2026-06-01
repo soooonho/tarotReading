@@ -7,8 +7,8 @@ import { handleClickHistory } from "../hooks/handleClickHistory";
 import { handleShareUrl } from "../hooks/handleShareUrl";
 import { handleRestart } from "../hooks/handleRestart";
 const deck = getShuffledDeck();
-const page = "today";
-const category = "today";
+const page = "daily";
+const category = "daily";
 const maxSelectedCard = 1;
 export default function Today() {
   const { history, selectedCards, setSelectedCards, flipCards, setFlipCards } =
