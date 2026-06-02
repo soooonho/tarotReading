@@ -17,12 +17,22 @@ export default function Normal() {
   return (
     <>
       <div className="app">
-        <button className="basic-btn" value="love" onClick={handlepage}>
-          연애운
-        </button>
-        <button className="basic-btn" value="money" onClick={handlepage}>
-          금전운
-        </button>
+        <nav className="nav-container">
+          <button
+            className={`nav-item ${currentPage === "love" ? "active" : ""}`}
+            value="love"
+            onClick={handlepage}
+          >
+            연애운
+          </button>
+          <button
+            className={`nav-item ${currentPage === "money" ? "active" : ""}`}
+            value="money"
+            onClick={handlepage}
+          >
+            금전운
+          </button>
+        </nav>
         {currentPage == "main" && <h1>Normal Component</h1>}
         {currentPage == "money" && <Money />}
         {currentPage == "love" && <Love />}
