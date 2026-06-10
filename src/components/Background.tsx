@@ -1,7 +1,7 @@
-export default function Bcakground () {
- return (
- <>
- {/* 천상열차분야지도 회전 배경 */}
+export default function Background() {
+  return (
+    <>
+      {/* 천상열차분야지도 회전 배경 */}
       <div className="stars-static" />
       <div className="cheonsang-bg">
         <svg viewBox="0 0 680 680" xmlns="http://www.w3.org/2000/svg">
@@ -274,6 +274,6 @@ export default function Bcakground () {
           />
         </svg>
       </div>
- </>
- );
+    </>
+  );
 }

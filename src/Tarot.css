@@ -20,6 +20,13 @@
 }
 
 /* ── Navigation Menu ── */
+nav {
+  position: fixed;
+  top: 0;
+  width: 100%;
+  z-index: 9999;
+}
+
 .nav-container {
   display: flex;
   justify-content: center;
@@ -110,20 +117,28 @@
 
 .tarot-grid-container {
   display: grid;
-  grid-template-columns: repeat(11, 2fr) !important;
+  grid-template-columns: repeat(11, 2fr);
   gap: 10px;
-  padding: 20px;
+  padding: 2px;
   width: 100%;
   box-sizing: border-box;
 }
 
 .tarot-grid-container > * {
-  width: 100% !important;
-  max-width: 100% !important;
-  height: auto !important;
+  width: 100%;
+  max-width: 100%;
+  height: auto;
   display: block;
 }
 
 .tarot-grid-container > *:hover {
   transform: translateY(-5px);
+}
+
+.today_result {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  width: 100%;
+  padding-top: 20px;
 }
