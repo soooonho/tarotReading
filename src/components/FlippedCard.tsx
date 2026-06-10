@@ -1,3 +1,5 @@
+import "../Tarot.css";
+
 interface CardProps extends React.ComponentPropsWithRef<"button"> {
   cardNum: number;
   upright: boolean;
@@ -7,8 +9,9 @@ export default function FlippedCard(props: CardProps) {
   const { cardNum, upright, ...rest } = props;
   return (
     <>
-      <button {...rest}>
+      <button className="btn-card" {...rest}>
         <img
+          className="tarot-grid-contianer"
           src={`${cardNum}.png`}
           style={
             upright

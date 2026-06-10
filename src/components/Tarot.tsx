@@ -1,10 +1,10 @@
 import { useState } from "react";
-import Bcakground from "./Bcakground";
 import SoulCard from "./SoulCard";
 import History from "./History";
 import Normal from "./Normal";
 import Daily from "./Daily";
 import "../Tarot.css";
+import Background from "./Background";
 
 export default function Tarot() {
   const [currentPage, setCurrentPage] = useState(() => {
@@ -18,8 +18,8 @@ export default function Tarot() {
   };
   return (
     <>
+      <Background />
       <div className="app">
-        <Bcakground />
         <nav className="nav-container">
           <button
             className={`nav-item ${currentPage === "main" ? "active" : ""}`}
@@ -57,6 +57,7 @@ export default function Tarot() {
             과거이력조회
           </button>
         </nav>
+
         {currentPage == "main" && <h1>App Component</h1>}
         {currentPage == "soul" && <SoulCard />}
         {currentPage == "today" && <Daily />}

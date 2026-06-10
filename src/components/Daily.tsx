@@ -4,6 +4,9 @@ import { getShuffledDeck, type tarotRecord } from "../tarotControl";
 import { useTarotState } from "../hooks/useTarotState";
 import { handleTarotClick } from "../hooks/handleTarotClick";
 import ShowDailyCard from "./ShowDailyCard";
+
+import "../Tarot.css";
+
 const deck = getShuffledDeck();
 const page = "daily";
 const category = "daily";
