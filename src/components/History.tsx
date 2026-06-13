@@ -1,4 +1,5 @@
 import { useState } from "react";
+import type { tarotRecord } from "../tarotControl";
 import ShowCards from "./ShowCards";
 import moneyTarotDataRaw from "../assets/data/moneyTarotData.json";
 import loveTarotDataRaw from "../assets/data/loveTarotData.json";
@@ -14,9 +15,9 @@ export default function History() {
   const moneyHistory = JSON.parse(localStorage.getItem("money") || "[]");
 
   const dates = [
-    ...dailyHistory.map((item) => item.date),
-    ...loveHistory.map((item) => item.date),
-    ...moneyHistory.map((item) => item.date),
+    ...dailyHistory.map((item: tarotRecord) => item.date),
+    ...loveHistory.map((item: tarotRecord) => item.date),
+    ...moneyHistory.map((item: tarotRecord) => item.date),
   ];
   const uniqueDates = Array.from(new Set(dates)).sort((a, b) =>
     b.localeCompare(a),
@@ -36,11 +37,17 @@ export default function History() {
   const getSelectedCards = () => {
     if (!selectedHistory || !selectedCategory) return null;
     if (selectedCategory === "daily")
-      return dailyHistory.find((item) => item.date === selectedHistory)?.cards;
+      return dailyHistory.find(
+        (item: tarotRecord) => item.date === selectedHistory,
+      )?.cards;
     if (selectedCategory === "love")
-      return loveHistory.find((item) => item.date === selectedHistory)?.cards;
+      return loveHistory.find(
+        (item: tarotRecord) => item.date === selectedHistory,
+      )?.cards;
     if (selectedCategory === "money")
-      return moneyHistory.find((item) => item.date === selectedHistory)?.cards;
+      return moneyHistory.find(
+        (item: tarotRecord) => item.date === selectedHistory,
+      )?.cards;
     return null;
   };
 
@@ -70,7 +77,7 @@ export default function History() {
               <div
                 style={{ display: "flex", flexDirection: "column", gap: "4px" }}
               >
-                {dailyHistory.some((h) => h.date === date) && (
+                {dailyHistory.some((h: tarotRecord) => h.date === date) && (
                   <button
                     value="daily"
                     onClick={() => handleClickCategory(date, "daily")}
@@ -93,7 +100,7 @@ export default function History() {
                     오늘의 운세
                   </button>
                 )}
-                {loveHistory.some((h) => h.date === date) && (
+                {loveHistory.some((h: tarotRecord) => h.date === date) && (
                   <button
                     value="love"
                     onClick={() => handleClickCategory(date, "love")}
@@ -116,7 +123,7 @@ export default function History() {
                     연애
                   </button>
                 )}
-                {moneyHistory.some((h) => h.date === date) && (
+                {moneyHistory.some((h: tarotRecord) => h.date === date) && (
                   <button
                     value="money"
                     onClick={() => handleClickCategory(date, "money")}

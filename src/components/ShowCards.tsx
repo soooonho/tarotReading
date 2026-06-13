@@ -92,7 +92,7 @@ export default function ShowCards({
         {again && (
           <button
             className="btn-again"
-            onClick={() => handleRestart(setSelectedCards, setFlipCards)}
+            onClick={() => handleRestart(setSelectedCards!, setFlipCards!)}
           >
             다시
           </button>

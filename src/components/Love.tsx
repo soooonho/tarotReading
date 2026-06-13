@@ -4,7 +4,8 @@ import FlippedCard from "./FlippedCard";
 import loveTarotDataRaw from "../assets/data/loveTarotData.json";
 import { handleTarotClick } from "../hooks/handleTarotClick";
 import ShowCards from "./ShowCards";
-import { useState, useEffect } from "react";
+import { useState } from "react";
+import type { tarotCard } from "../tarotControl";
 import "../Tarot.css";
 
 const deck = getShuffledDeck();
@@ -17,7 +18,7 @@ export default function Love() {
     useTarotState(category);
   const [isLoading, setIsLoading] = useState(false);
 
-  const handleCardClick = (value) => {
+  const handleCardClick = (value: tarotCard) => {
     const nextSelectedCards = [...selectedCards, value];
     if (nextSelectedCards.length >= maxSelectedCard) {
       setIsLoading(true);

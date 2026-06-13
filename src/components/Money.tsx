@@ -5,6 +5,7 @@ import moneyTarotDataRaw from "../assets/data/moneyTarotData.json";
 import { handleTarotClick } from "../hooks/handleTarotClick";
 import ShowCards from "./ShowCards";
 import { useState } from "react";
+import type { tarotCard } from "../tarotControl";
 
 const deck = getShuffledDeck();
 const page = "normal";
@@ -16,7 +17,7 @@ export default function Money() {
     useTarotState(category);
   const [isLoading, setIsLoading] = useState(false);
 
-  const handleCardClick = (value) => {
+  const handleCardClick = (value: tarotCard) => {
     const nextSelectedCards = [...selectedCards, value];
     if (nextSelectedCards.length >= maxSelectedCard) {
       setIsLoading(true);
