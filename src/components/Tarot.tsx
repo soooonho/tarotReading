@@ -9,7 +9,9 @@ import Background from "./Background";
 export default function Tarot() {
   const [currentPage, setCurrentPage] = useState(() => {
     const params = new URLSearchParams(window.location.search);
-    const page = params.get("page");
+    let page = params.get("page");
+    const category = params.get("category");
+    page = category === "love" || category === "money" ? category : page;
     if (page) return page;
     else return "main";
   });
@@ -88,7 +90,7 @@ export default function Tarot() {
                 </a>
                 <a>
                   <button
-                    className={`nav-item ${currentPage === "love" ? "active" : ""}`}
+                    className={`nav-item ${currentPage === "money" ? "active" : ""}`}
                     value="money"
                     onClick={handlepage}
                   >
