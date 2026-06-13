@@ -249,3 +249,30 @@ nav {
 .slide-up {
   animation: slideUp 0.7s ease-out;
 }
+
+@keyframes slideInRight {
+  from {
+    opacity: 0;
+    transform: translateX(-20px);
+  }
+  to {
+    opacity: 1;
+    transform: translateX(0);
+  }
+}
+
+.history-box {
+  animation: slideInRight 0.4s ease-out;
+  border: 1px solid var(--border);
+  border-radius: 8px;
+  padding: 24px;
+  background: var(--surface);
+  flex: 1;
+}
+
+.history-list {
+  list-style: none;
+  padding: 0;
+  min-width: 160px;
+  transition: transform 0.4s ease-out;
+}
