@@ -4,19 +4,61 @@ import FlippedCard from "./FlippedCard";
 import loveTarotDataRaw from "../assets/data/loveTarotData.json";
 import { handleTarotClick } from "../hooks/handleTarotClick";
 import ShowCards from "./ShowCards";
+import { useState, useEffect } from "react";
 import "../Tarot.css";
 
 const deck = getShuffledDeck();
 const page = "normal";
 const category = "love";
 const maxSelectedCard = 3;
+
 export default function Love() {
   const { selectedCards, setSelectedCards, flipCards, setFlipCards } =
     useTarotState(category);
-  console.log(deck);
+  const [isLoading, setIsLoading] = useState(false);
+
+  const handleCardClick = (value) => {
+    const nextSelectedCards = [...selectedCards, value];
+    if (nextSelectedCards.length >= maxSelectedCard) {
+      setIsLoading(true);
+      setTimeout(() => setIsLoading(false), 2500);
+    }
+    handleTarotClick(
+      category,
+      maxSelectedCard,
+      value,
+      flipCards,
+      setFlipCards,
+      selectedCards,
+      setSelectedCards,
+    );
+  };
+
   return (
     <>
-      {flipCards && (
+      {isLoading && (
+        <div
+          style={{
+            display: "flex",
+            flexDirection: "column",
+            alignItems: "center",
+            justifyContent: "center",
+            height: "60vh",
+            gap: "24px",
+          }}
+        >
+          <p
+            style={{
+              color: "var(--silver)",
+              letterSpacing: "0.3em",
+              fontSize: "1rem",
+            }}
+          >
+            카드를 해석하는 중...
+          </p>
+        </div>
+      )}
+      {!isLoading && flipCards && (
         <div className="result-layout">
           <ShowCards
             page={page}
@@ -30,11 +72,11 @@ export default function Love() {
           />
         </div>
       )}
-      {!flipCards && (
+      {!flipCards && !isLoading && (
         <div className="tarot-grid-container">
-          {deck.map((value) => (
+          {deck.map((value, index) => (
             <FlippedCard
-              key={value}
+              key={index}
               cardNum={
                 flipCards && selectedCards.includes(value) ? value.cardNum : 0
               }
@@ -43,17 +85,7 @@ export default function Love() {
                   ? value.upright
                   : true
               }
-              onClick={() =>
-                handleTarotClick(
-                  category,
-                  maxSelectedCard,
-                  value,
-                  flipCards,
-                  setFlipCards,
-                  selectedCards,
-                  setSelectedCards,
-                )
-              }
+              onClick={() => handleCardClick(value)}
               className={selectedCards.includes(value) ? "card-selected" : ""}
             />
           ))}

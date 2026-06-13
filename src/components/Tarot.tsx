@@ -106,7 +106,15 @@ export default function Tarot() {
             과거이력조회
           </button>
         </nav>
-        {currentPage == "main" && <h1>App Component</h1>}
+        {currentPage == "main" && (
+          <>
+            <h1>ARCANA</h1>
+            <p>
+              복잡한 고민 속에서 길을 잃었을 때, 타로가 건네는 다정한 조언을
+              들어보세요
+            </p>
+          </>
+        )}
         {currentPage == "soul" && <SoulCard />}
         {currentPage == "today" && <Daily />}
         {(currentPage == "normal" ||

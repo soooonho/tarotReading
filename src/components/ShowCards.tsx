@@ -73,7 +73,11 @@ export default function ShowCards({
             <h2>{rawData[card.cardNum].name}</h2>
             <img
               src={`${card.cardNum}.png`}
-              style={!card.upright ? { transform: "rotate(180deg)" } : {}}
+              style={
+                !card.upright
+                  ? { width: "200px", transform: "rotate(180deg)" }
+                  : { width: "200px" }
+              }
             />
             <p className="card-description">
               {card.upright
