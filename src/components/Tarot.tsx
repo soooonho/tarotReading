@@ -58,8 +58,8 @@ export default function Tarot() {
             소울카드
           </button>
           <button
-            className={`nav-item ${currentPage === "today" ? "active" : ""}`}
-            value="today"
+            className={`nav-item ${currentPage === "daily" ? "active" : ""}`}
+            value="daily"
             onClick={pageHandler}
           >
             오늘의운세
@@ -118,7 +118,7 @@ export default function Tarot() {
           </>
         )}
         {currentPage == "soul" && <SoulCard />}
-        {currentPage == "today" && <Daily />}
+        {currentPage == "daily" && <Daily />}
         {(currentPage == "normal" ||
           currentPage == "love" ||
           currentPage == "money") && (
