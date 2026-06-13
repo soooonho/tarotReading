@@ -16,6 +16,26 @@ export default function Tarot() {
   const pageHandler = (e: React.MouseEvent<HTMLButtonElement>) => {
     setCurrentPage(e.currentTarget.value);
   };
+  // 일반 운세에서 드롭다운의 열림/닫힘 상태를 관리하는 State
+  const [isOpen, setIsOpen] = useState(false);
+  const [isVisible, setIsVisible] = useState(false);
+
+  const handlepage = (e: React.MouseEvent<HTMLButtonElement>) => {
+    setCurrentPage(e.currentTarget.value);
+    setIsOpen(false);
+    setTimeout(() => setIsVisible(false), 250);
+  };
+
+  const handleMouseEnter = () => {
+    setIsVisible(true);
+    setTimeout(() => setIsOpen(true), 10); // 렌더 직후 open 클래스 부여
+  };
+
+  const handleMouseLeave = () => {
+    setIsOpen(false); // fade-out 시작
+    setTimeout(() => setIsVisible(false), 250); // 애니메이션 끝나면 DOM 제거
+  };
+
   return (
     <>
       <Background />
@@ -42,13 +62,42 @@ export default function Tarot() {
           >
             오늘의운세
           </button>
-          <button
-            className={`nav-item ${currentPage === "normal" ? "active" : ""}`}
-            value="normal"
-            onClick={pageHandler}
+
+          <div
+            className="dropdown-container"
+            onMouseEnter={handleMouseEnter}
+            onMouseLeave={handleMouseLeave} //마우스가 내려갔을 때
           >
-            일반운세
-          </button>
+            <button
+              className={`nav-item ${["info", "love", "money"].includes(currentPage) ? "active" : ""}`}
+              value="normal"
+              onClick={pageHandler}
+            >
+              일반운세
+            </button>
+            {isVisible && (
+              <div className={`dropdown-content ${isOpen ? "open" : ""}`}>
+                <a>
+                  <button
+                    className={`nav-item ${currentPage === "love" ? "active" : ""}`}
+                    value="love"
+                    onClick={handlepage}
+                  >
+                    연애운
+                  </button>
+                </a>
+                <a>
+                  <button
+                    className={`nav-item ${currentPage === "love" ? "active" : ""}`}
+                    value="money"
+                    onClick={handlepage}
+                  >
+                    금전운
+                  </button>
+                </a>
+              </div>
+            )}
+          </div>
           <button
             className={`nav-item ${currentPage === "history" ? "active" : ""}`}
             value="history"
@@ -57,11 +106,16 @@ export default function Tarot() {
             과거이력조회
           </button>
         </nav>
-
         {currentPage == "main" && <h1>App Component</h1>}
         {currentPage == "soul" && <SoulCard />}
         {currentPage == "today" && <Daily />}
-        {currentPage == "normal" && <Normal />}
+        {(currentPage == "normal" ||
+          currentPage == "love" ||
+          currentPage == "money") && (
+          <Normal
+            currentPage={currentPage === "normal" ? "info" : currentPage}
+          />
+        )}
         {currentPage == "history" && <History />}
       </div>
     </>

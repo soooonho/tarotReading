@@ -1,0 +1,50 @@
+:root {
+  --silver: #8fa4b8;
+  --silver-dim: #c8d4e0;
+  --silver-glow: rgba(117, 216, 255, 0.35);
+  --bg: #080808;
+  --surface: rgba(255, 255, 255, 0.04);
+  --border: rgba(105, 203, 255, 0.3);
+  --text: #b0c0d0;
+  --text-muted: #4a5a54;
+}
+
+.btn-again {
+  background: none;
+  border: none;
+  color: var(--silver);
+  font-family: "Noto Serif KR", serif;
+  font-size: 1rem;
+  letter-spacing: 0.1em;
+  padding: 8px 16px;
+  cursor: pointer;
+  transition: all 0.3s ease;
+  position: relative;
+  border-radius: 4px;
+}
+
+.btn-again:hover {
+  color: var(--silver-dim);
+  text-shadow: 0 0 8px var(--silver-glow);
+  background: var(--silver-glow);
+}
+
+.btn-share {
+  background: none;
+  border: none;
+  color: var(--silver);
+  font-family: "Noto Serif KR", serif;
+  font-size: 1rem;
+  letter-spacing: 0.1em;
+  padding: 8px 16px;
+  cursor: pointer;
+  transition: all 0.3s ease;
+  position: relative;
+  border-radius: 4px;
+}
+
+.btn-share:hover {
+  color: var(--silver-dim);
+  text-shadow: 0 0 8px var(--silver-glow);
+  background: var(--silver-glow);
+}

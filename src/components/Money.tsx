@@ -26,29 +26,35 @@ export default function Love() {
           share={true}
         />
       )}
-      {!flipCards &&
-        deck.map((value) => (
-          <FlippedCard
-            key={value}
-            cardNum={
-              flipCards && selectedCards.includes(value) ? value.cardNum : 0
-            }
-            upright={
-              flipCards && selectedCards.includes(value) ? value.upright : true
-            }
-            onClick={() =>
-              handleTarotClick(
-                category,
-                maxSelectedCard,
-                value,
-                flipCards,
-                setFlipCards,
-                selectedCards,
-                setSelectedCards,
-              )
-            }
-          />
-        ))}
+      {!flipCards && (
+        <div className="tarot-grid-container">
+          {deck.map((value) => (
+            <FlippedCard
+              key={value}
+              cardNum={
+                flipCards && selectedCards.includes(value) ? value.cardNum : 0
+              }
+              upright={
+                flipCards && selectedCards.includes(value)
+                  ? value.upright
+                  : true
+              }
+              onClick={() =>
+                handleTarotClick(
+                  category,
+                  maxSelectedCard,
+                  value,
+                  flipCards,
+                  setFlipCards,
+                  selectedCards,
+                  setSelectedCards,
+                )
+              }
+              className={selectedCards.includes(value) ? "card-selected" : ""}
+            />
+          ))}
+        </div>
+      )}
     </>
   );
 }

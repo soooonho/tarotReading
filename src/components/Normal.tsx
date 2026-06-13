@@ -1,40 +1,18 @@
-import { useState } from "react";
 import Money from "./Money";
 import Love from "./Love";
-
 import "../Tarot.css";
+import NormalInfo from "./NormalInfo";
 
-export default function Normal() {
-  const [currentPage, setCurrentPage] = useState(() => {
-    const params = new URLSearchParams(window.location.search);
-    const category = params.get("category");
-    if (category) return category;
-    else return "main";
-  });
-  const handlepage = (e: React.MouseEvent<HTMLButtonElement>) => {
-    setCurrentPage(e.currentTarget.value);
-  };
+interface NormalProps {
+  currentPage: string;
+}
+
+export default function Normal({ currentPage }: NormalProps) {
   return (
     <>
-      <div className="app">
-        <button
-          className={`nav-item ${currentPage === "love" ? "active" : ""}`}
-          value="love"
-          onClick={handlepage}
-        >
-          연애운
-        </button>
-        <button
-          className={`nav-item ${currentPage === "money" ? "active" : ""}`}
-          value="money"
-          onClick={handlepage}
-        >
-          금전운
-        </button>
-        {currentPage == "main" && <h1>Normal Component</h1>}
-        {currentPage == "money" && <Money />}
-        {currentPage == "love" && <Love />}
-      </div>
+      {currentPage == "info" && <NormalInfo />}
+      {currentPage == "love" && <Love />}
+      {currentPage == "money" && <Money />}
     </>
   );
 }
