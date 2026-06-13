@@ -1,66 +1,64 @@
-import { getShuffledDeck, type tarotRecord } from "../tarotControl";
+import { getShuffledDeck } from "../tarotControl";
 import { useTarotState } from "../hooks/useTarotState";
 import FlippedCard from "./FlippedCard";
 import loveTarotDataRaw from "../assets/data/loveTarotData.json";
 import { handleTarotClick } from "../hooks/handleTarotClick";
-import { handleClickHistory } from "../hooks/handleClickHistory";
 import ShowCards from "./ShowCards";
+import "../Tarot.css";
+
 const deck = getShuffledDeck();
 const page = "normal";
 const category = "love";
 const maxSelectedCard = 3;
 export default function Love() {
-  const { history, selectedCards, setSelectedCards, flipCards, setFlipCards } =
+  const { selectedCards, setSelectedCards, flipCards, setFlipCards } =
     useTarotState(category);
   console.log(deck);
   return (
     <>
       {flipCards && (
-        <ShowCards
-          page={page}
-          category={category}
-          rawData={loveTarotDataRaw}
-          selectedCards={selectedCards}
-          setSelectedCards={setSelectedCards}
-          setFlipCards={setFlipCards}
-          again={true}
-          share={true}
-        />
-      )}
-      {!flipCards &&
-        deck.map((value) => (
-          <FlippedCard
-            key={value}
-            cardNum={
-              flipCards && selectedCards.includes(value) ? value.cardNum : 0
-            }
-            upright={
-              flipCards && selectedCards.includes(value) ? value.upright : true
-            }
-            onClick={() =>
-              handleTarotClick(
-                category,
-                maxSelectedCard,
-                value,
-                flipCards,
-                setFlipCards,
-                selectedCards,
-                setSelectedCards,
-              )
-            }
+        <div className="result-layout">
+          <ShowCards
+            page={page}
+            category={category}
+            rawData={loveTarotDataRaw}
+            selectedCards={selectedCards}
+            setSelectedCards={setSelectedCards}
+            setFlipCards={setFlipCards}
+            again={true}
+            share={true}
           />
-        ))}
-      {history &&
-        history.map((item: tarotRecord) => (
-          <button
-            key={item.date}
-            onClick={() =>
-              handleClickHistory(item, setSelectedCards, setFlipCards)
-            }
-          >
-            {item.date}
-          </button>
-        ))}
+        </div>
+      )}
+      {!flipCards && (
+        <div className="tarot-grid-container">
+          {deck.map((value) => (
+            <FlippedCard
+              key={value}
+              cardNum={
+                flipCards && selectedCards.includes(value) ? value.cardNum : 0
+              }
+              upright={
+                flipCards && selectedCards.includes(value)
+                  ? value.upright
+                  : true
+              }
+              onClick={() =>
+                handleTarotClick(
+                  category,
+                  maxSelectedCard,
+                  value,
+                  flipCards,
+                  setFlipCards,
+                  selectedCards,
+                  setSelectedCards,
+                )
+              }
+              className={selectedCards.includes(value) ? "card-selected" : ""}
+            />
+          ))}
+        </div>
+      )}
     </>
   );
 }

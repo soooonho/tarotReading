@@ -1,6 +1,11 @@
 import type { tarotCard } from "../tarotControl";
 import { handleShareUrl } from "../hooks/handleShareUrl";
 import { handleRestart } from "../hooks/handleRestart";
+
+import "../Button.css";
+import "../Tarot.css";
+import "../App.css";
+
 interface RawTarotData {
   card_id: number;
   name: string;
@@ -11,6 +16,7 @@ interface RawTarotData {
   future_upright: string;
   future_reversed: string;
 }
+
 export default function ShowCards({
   page,
   category,
@@ -30,48 +36,72 @@ export default function ShowCards({
   again: boolean;
   share: boolean;
 }) {
+  const positions = ["과거", "현재", "미래"];
+  const fields = ["past", "present", "future"] as const;
+
   return (
-    <>
-      <h1>{rawData[selectedCards[0].cardNum].name}</h1>
-      <img
-        src={`${selectedCards[0].cardNum}.png`}
-        style={!selectedCards[0].upright ? { transform: "rotate(180deg)" } : {}}
-      />
-      <p>
-        {selectedCards[0].upright
-          ? rawData[selectedCards[0].cardNum].past_upright
-          : rawData[selectedCards[0].cardNum].past_reversed}
-      </p>
-      <h1>{rawData[selectedCards[1].cardNum].name}</h1>
-      <img
-        src={`${selectedCards[1].cardNum}.png`}
-        style={!selectedCards[1].upright ? { transform: "rotate(180deg)" } : {}}
-      />
-      <p>
-        {selectedCards[1].upright
-          ? rawData[selectedCards[1].cardNum].present_upright
-          : rawData[selectedCards[1].cardNum].present_reversed}
-      </p>
-      <h1>{rawData[selectedCards[2].cardNum].name}</h1>
-      <img
-        src={`${selectedCards[2].cardNum}.png`}
-        style={!selectedCards[2].upright ? { transform: "rotate(180deg)" } : {}}
-      />
-      <p>
-        {selectedCards[2].upright
-          ? rawData[selectedCards[2].cardNum].future_upright
-          : rawData[selectedCards[2].cardNum].future_reversed}
-      </p>{" "}
-      {again&& (
-        <button onClick={() => handleRestart(setSelectedCards, setFlipCards)}>
-          다시
-        </button>
-      )}
-      {share && (
-        <button onClick={() => handleShareUrl(page, category, selectedCards)}>
-          공유
-        </button>
-      )}
-    </>
+    <div
+      style={{
+        display: "flex",
+        flexDirection: "column",
+        alignItems: "center",
+        gap: "32px",
+        paddingTop: "64px", // nav 높이에 맞게 조정
+      }}
+    >
+      {/* 카드 가로 배열 */}
+      <div
+        style={{
+          display: "flex",
+          flexDirection: "row",
+          gap: "24px",
+          justifyContent: "center",
+          alignItems: "flex-start",
+        }}
+      >
+        {selectedCards.map((card, i) => (
+          <div
+            key={i}
+            style={{
+              display: "flex",
+              flexDirection: "column",
+              alignItems: "center",
+              flex: 1,
+            }}
+          >
+            <h1>{positions[i]}</h1>
+            <h2>{rawData[card.cardNum].name}</h2>
+            <img
+              src={`${card.cardNum}.png`}
+              style={!card.upright ? { transform: "rotate(180deg)" } : {}}
+            />
+            <p className="card-description">
+              {card.upright
+                ? rawData[card.cardNum][`${fields[i]}_upright`]
+                : rawData[card.cardNum][`${fields[i]}_reversed`]}
+            </p>
+          </div>
+        ))}
+      </div>
+
+      <div style={{ display: "flex", gap: "12px" }}>
+        {again && (
+          <button
+            className="btn-again"
+            onClick={() => handleRestart(setSelectedCards, setFlipCards)}
+          >
+            다시
+          </button>
+        )}
+        {share && (
+          <button
+            className="btn-share"
+            onClick={() => handleShareUrl(page, category, selectedCards)}
+          >
+            공유
+          </button>
+        )}
+      </div>
+    </div>
   );
 }
