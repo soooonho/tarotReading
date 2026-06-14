@@ -4,19 +4,21 @@ import FlippedCard from "./FlippedCard";
 import moneyTarotDataRaw from "../assets/data/moneyTarotData.json";
 import { handleTarotClick } from "../hooks/handleTarotClick";
 import ShowCards from "./ShowCards";
-import { useState } from "react";
+import { useEffect, useState } from "react";
 import type { tarotCard } from "../tarotControl";
 
+let deck = getShuffledDeck();
 const page = "normal";
 const category = "money";
 const maxSelectedCard = 3;
 
 export default function Money() {
-  const [deck, setDeck] = useState(getShuffledDeck());
   const { selectedCards, setSelectedCards, flipCards, setFlipCards } =
     useTarotState(category);
   const [isLoading, setIsLoading] = useState(false);
-
+  useEffect(() => {
+    deck = getShuffledDeck();
+  }, [flipCards]);
   const handleCardClick = (value: tarotCard) => {
     const nextSelectedCards = [...selectedCards, value];
     if (nextSelectedCards.length >= maxSelectedCard) {
@@ -68,7 +70,6 @@ export default function Money() {
           setFlipCards={setFlipCards}
           again={true}
           share={true}
-          setDeck={setDeck}
         />
       )}
       {!flipCards && !isLoading && (

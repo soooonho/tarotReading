@@ -22,7 +22,6 @@ export default function ShowDailyCard({
   setFlipCards,
   again,
   share,
-  setDeck,
 }: {
   page: string;
   category: string;
@@ -32,9 +31,6 @@ export default function ShowDailyCard({
   setFlipCards?: React.Dispatch<React.SetStateAction<boolean>>;
   again: boolean;
   share: boolean;
-  setDeck: React.Dispatch<
-    React.SetStateAction<{ cardNum: number; upright: boolean }[]>
-  >;
 }) {
   return (
     <>
@@ -73,9 +69,7 @@ export default function ShowDailyCard({
           {again && (
             <button
               className="btn-again"
-              onClick={() =>
-                handleRestart(setSelectedCards!, setFlipCards!, setDeck)
-              }
+              onClick={() => handleRestart(setSelectedCards!, setFlipCards!)}
             >
               다시
             </button>

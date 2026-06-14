@@ -8,17 +8,19 @@ import { useState, useEffect, useRef } from "react";
 
 import "../Tarot.css";
 
+let deck = getShuffledDeck();
 const page = "daily";
 const category = "daily";
 const maxSelectedCard = 1;
 
 export default function Daily() {
-  const [deck,setDeck] = useState(getShuffledDeck());
   const { selectedCards, setSelectedCards, flipCards, setFlipCards } =
     useTarotState(category);
   const [isLoading, setIsLoading] = useState(false);
   const isFirstCard = useRef(selectedCards.length === 0); // 이미 카드 있으면 false로 시작
-
+  useEffect(()=>{
+    deck = getShuffledDeck();
+  },[flipCards]);
   useEffect(() => {
     if (selectedCards.length > 0) {
       if (isFirstCard.current) {
@@ -66,7 +68,6 @@ export default function Daily() {
               setFlipCards={setFlipCards}
               again={true}
               share={true}
-              setDeck={setDeck}
             />
           </div>
         )}

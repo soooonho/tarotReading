@@ -26,7 +26,6 @@ export default function ShowCards({
   setFlipCards,
   again,
   share,
-  setDeck,
 }: {
   page: string;
   category: string;
@@ -36,9 +35,6 @@ export default function ShowCards({
   setFlipCards?: React.Dispatch<React.SetStateAction<boolean>>;
   again: boolean;
   share: boolean;
-  setDeck: React.Dispatch<
-    React.SetStateAction<{ cardNum: number; upright: boolean }[]>
-  >;
 }) {
   const positions = ["과거", "현재", "미래"];
   const fields = ["past", "present", "future"] as const;
@@ -96,9 +92,7 @@ export default function ShowCards({
         {again && (
           <button
             className="btn-again"
-            onClick={() =>
-              handleRestart(setSelectedCards!, setFlipCards!, setDeck)
-            }
+            onClick={() => handleRestart(setSelectedCards!, setFlipCards!)}
           >
             다시
           </button>
