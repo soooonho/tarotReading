@@ -8,12 +8,12 @@ import { useState, useEffect, useRef } from "react";
 
 import "../Tarot.css";
 
-const deck = getShuffledDeck();
 const page = "daily";
 const category = "daily";
 const maxSelectedCard = 1;
 
 export default function Daily() {
+  const [deck,setDeck] = useState(getShuffledDeck());
   const { selectedCards, setSelectedCards, flipCards, setFlipCards } =
     useTarotState(category);
   const [isLoading, setIsLoading] = useState(false);
@@ -66,6 +66,7 @@ export default function Daily() {
               setFlipCards={setFlipCards}
               again={true}
               share={true}
+              setDeck={setDeck}
             />
           </div>
         )}

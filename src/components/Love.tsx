@@ -8,12 +8,12 @@ import { useState } from "react";
 import type { tarotCard } from "../tarotControl";
 import "../Tarot.css";
 
-const deck = getShuffledDeck();
 const page = "normal";
 const category = "love";
 const maxSelectedCard = 3;
 
 export default function Love() {
+  const [deck, setDeck] = useState(getShuffledDeck());
   const { selectedCards, setSelectedCards, flipCards, setFlipCards } =
     useTarotState(category);
   const [isLoading, setIsLoading] = useState(false);
@@ -70,6 +70,7 @@ export default function Love() {
             setFlipCards={setFlipCards}
             again={true}
             share={true}
+            setDeck={setDeck}
           />
         </div>
       )}

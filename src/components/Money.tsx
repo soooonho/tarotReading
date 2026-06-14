@@ -7,12 +7,12 @@ import ShowCards from "./ShowCards";
 import { useState } from "react";
 import type { tarotCard } from "../tarotControl";
 
-const deck = getShuffledDeck();
 const page = "normal";
 const category = "money";
 const maxSelectedCard = 3;
 
 export default function Money() {
+  const [deck, setDeck] = useState(getShuffledDeck());
   const { selectedCards, setSelectedCards, flipCards, setFlipCards } =
     useTarotState(category);
   const [isLoading, setIsLoading] = useState(false);
@@ -68,6 +68,7 @@ export default function Money() {
           setFlipCards={setFlipCards}
           again={true}
           share={true}
+          setDeck={setDeck}
         />
       )}
       {!flipCards && !isLoading && (
